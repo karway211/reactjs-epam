@@ -1,16 +1,15 @@
-import './App.scss';
-import Footer from './containers/Footer';
-import Header from './containers/Header';
-import Main from './containers/Main';
+import { FooterContainer } from './pages/FooterContainer';
+import { Header } from './pages/Header';
+import { Main } from './pages/Main';
 
-const App = () => {
+import './App.scss';
+
+export function App() {
   return (
     <div className="App">
       <Header />
       <Main />
-      <Footer />
+      <FooterContainer />
     </div>
   );
 }
-
-export default App;

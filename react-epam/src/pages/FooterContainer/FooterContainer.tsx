@@ -1,10 +1,12 @@
 import React, { useEffect, useState } from 'react';
 import { useSelector } from 'react-redux';
+
+import { Footer } from './Footer';
 import { getPhoneMask } from './helpers';
-import Footer from './Footer';
+
 import { AppStateType } from '../../redux/store';
 
-const FooterContainer = () => {
+export const FooterContainer = () => {
 
   const { phone, skype } = useSelector((state: AppStateType) => state.userData.contact);
 
@@ -14,10 +16,10 @@ const FooterContainer = () => {
     setPhoneMask(getPhoneMask(phone));
   }, [phone]);
 
-  return <Footer
-    phone={phone}
-    skype={skype}
-    pfoneMask={pfoneMask} />
+  return (
+    <Footer
+      phone={phone}
+      skype={skype}
+      pfoneMask={pfoneMask} />
+  )
 }
-
-export default FooterContainer;

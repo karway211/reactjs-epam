@@ -8,9 +8,9 @@ let reducers = combineReducers({
 const store = createStore(reducers, applyMiddleware(thunkMiddleWare));
 
 type ReducersType = typeof reducers; // (globalstate: AppStateType) => AppStateType
-// захват типа, возвращаемого методом .getState()
+// getting the State type
 export type AppStateType = ReturnType<ReducersType>
-//захват типа экшена, возвращаемого action-creator-ом
+// getting the action type
 export type InferActionsTypes<T> = T extends { [key: string]: (...args: any[]) => infer U } ? U : never;
 
 // @ts-ignore

@@ -20,9 +20,9 @@ const userReducer = (state = initialState, action: ActionsType): InitialStateTyp
 }
 
 const actions = {}
-// захват типа экшена
+// capturing an action type
 type ActionsType = InferActionsTypes<typeof actions>;
-//захват типа стейта
+// getting the action type
 type InitialStateType = typeof initialState;
 
 export default userReducer;
