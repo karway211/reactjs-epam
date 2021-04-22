@@ -1,0 +1,13 @@
+@import '../../../../constants/palette.scss';
+
+.card {
+  background-color: $color_light_text;
+  border: 2px solid $color_dark;
+  margin: 10px;
+  cursor: pointer;
+}
+
+.image {
+  display: block;
+  width: 300px;
+}

@@ -1,0 +1,17 @@
+@import '../../../constants/palette.scss';
+
+.CardsContainer {
+  display: flex;
+  width: 100%;
+  flex-wrap: wrap;
+  justify-content: center;
+  align-items: center;
+  & .stub {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    font-size: 24px;
+    color: $color_light_text;
+  }
+}

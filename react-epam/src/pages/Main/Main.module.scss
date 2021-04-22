@@ -1,17 +1,17 @@
 @import '../../constants/palette.scss';
+@import '../../constants/vars.scss';
 
 .main {
-  flex: 1 0 auto;
   display: flex;
-  justify-content: center;
-  align-items: center;
   
   & .card {
+    min-width: 300px;
     width: 300px;
     height: 300px;
     position: relative;
     cursor: pointer;
     border-radius: 50%;
+    margin: 10px;
     &:hover {
       img {
         transform: perspective(600px) rotateY(-180deg);
@@ -44,5 +44,12 @@
       background-color: $color_brand_dark;
       transform: perspective(600px) rotateY(-180deg);
     }
+  }
+}
+
+@media (max-width: $tablet_breakpoint) {
+  .main {
+    flex-wrap: wrap;
+    justify-content: center;
   }
 }

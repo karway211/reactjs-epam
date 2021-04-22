@@ -13,6 +13,8 @@ export type AppStateType = ReturnType<ReducersType>
 // getting the action type
 export type InferActionsTypes<T> = T extends { [key: string]: (...args: any[]) => infer U } ? U : never;
 
+export type AppDispatchType = typeof store['dispatch'];
+
 // @ts-ignore
 window.__store__ = store;
 
