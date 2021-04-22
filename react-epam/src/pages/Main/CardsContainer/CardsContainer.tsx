@@ -38,7 +38,6 @@ class CardsContainer extends Component<MapStateType & MapDispatchType> {
     const cards = data.map(card => <Card key={card.id} {...card} />);
     const noCards = <div className={styles.stub}>No cards yet</div>
 
-    console.log(data)
     return (
 
       <div className={styles.CardsContainer}>
