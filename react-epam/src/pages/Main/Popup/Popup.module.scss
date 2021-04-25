@@ -1,0 +1,53 @@
+@import '../../../constants/palette.scss';
+@import '../../../constants/vars.scss';
+
+.wrapper {
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  width: 100%;
+  height: 100%;
+  background-color: $color_dark_bckgr;
+  display: none;
+  justify-content: center;
+  align-items: center;
+
+  .card {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    position: relative;
+    width: 400px;
+    height: 300px;
+    background-color: $color_light_text;
+    border-radius: 10px;
+    .close {
+      position: absolute;
+      top: 3px;
+      right: 3px;
+      cursor: pointer;
+    }
+    .saveCard {
+      position: absolute;
+      bottom: 10px;
+      left: 50%;
+      transform: translateX(-50%);
+    }
+  }
+  .blockName {
+    display: flex;
+    flex-direction: column;
+
+    .blockNameItem {
+      cursor: pointer;
+      margin-bottom: 10px;
+    }
+  }
+
+}
+
+.active {
+  display: flex;
+}

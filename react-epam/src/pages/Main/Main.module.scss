@@ -47,6 +47,14 @@
   }
 }
 
+.addCard {
+  cursor: pointer;
+  padding: 5px 10px;
+  color: $color_light_text;
+  background-color: $color_brand_dark;
+  outline: none;
+}
+
 @media (max-width: $tablet_breakpoint) {
   .main {
     flex-wrap: wrap;
