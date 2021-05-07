@@ -2,6 +2,7 @@ import React from 'react';
 import { useSelector } from 'react-redux';
 
 import { AppStateType } from '../../redux/store';
+import CardsContainer from './CardsContainer';
 
 import styles from './Main.module.scss';
 
@@ -16,6 +17,7 @@ export function Main() {
         </div>
         <img src={image} alt={alt} />
       </div>
+      <CardsContainer />
     </div>
   )
 }
