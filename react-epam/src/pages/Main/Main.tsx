@@ -3,7 +3,6 @@ import { useSelector } from 'react-redux';
 
 import { AppStateType } from '../../redux/store';
 import { CardsContainer } from './CardsContainer';
-import { PopupContainer } from './Popup';
 
 import styles from './Main.module.scss';
 
@@ -36,8 +35,7 @@ export function Main() {
 
         >add card</button>
       </div>
-      <CardsContainer />
-      <PopupContainer isPopup={isPopup} closePopup={closePopup} />
+      <CardsContainer closePopup={closePopup} isPopup={isPopup} />
     </div>
   )
 }
