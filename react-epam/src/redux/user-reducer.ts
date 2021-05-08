@@ -1,5 +1,5 @@
 import { InferActionsTypes, AppDispatchType } from "./store";
-import { MockedResponseType } from "../api/mockedResponse";
+import { MockedResponseItemType, MockedResponseType } from "../api/mockedResponse";
 import { mockedApi } from "../api/mockedApi";
 
 const initialState = {
@@ -26,21 +26,42 @@ const userReducer = (state = initialState, action: ActionsType): InitialStateTyp
         warehouse: action.payload
       }
     }
+    case 'DELETE_WAREHOUSE_ITEM': {
+      const id = action.payload;
+      const result = state.warehouse.filter(obj => obj.id !== id);
+      return {
+        ...state,
+        warehouse: result
+      }
+    }
+    case 'SET_WAREHOUSE_ITEM': {
+      return {
+        ...state,
+        warehouse: [...state.warehouse, action.payload]
+      }
+    }
+    default: {
+      return {
+        ...initialState
+      }
+    }
   }
-  return state;
 }
 
-const actions = {
-  setDataWarehouse: (payload: MockedResponseType) => ({ type: 'SET_DATA_WAREHOUSE', payload }),
+export const actions = {
+  setDataWarehouse: (payload: MockedResponseType) => ({ type: 'SET_DATA_WAREHOUSE', payload } as const),
+  deleteWarehouseItem: (payload: number) => ({ type: 'DELETE_WAREHOUSE_ITEM', payload } as const),
+  setWarehouseItem: (payload: MockedResponseItemType) => ({ type: 'SET_WAREHOUSE_ITEM', payload } as const),
 }
 
-export const getDataWarehouse = () => async (dispatch: AppDispatchType) => {
+export const getDataWarehouse = () => async (dispatch: AppDispatchType): Promise<void> => {
   const data = await mockedApi();
   dispatch(actions.setDataWarehouse(data));
 }
 
+
 // capturing an action type
-type ActionsType = InferActionsTypes<typeof actions>;
+export type ActionsType = InferActionsTypes<typeof actions>;
 // getting the action type
 type InitialStateType = typeof initialState;
 
