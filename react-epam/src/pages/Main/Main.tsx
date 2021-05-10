@@ -16,10 +16,6 @@ export function Main() {
     setIsPopup(isPopup);
   }
 
-  const closePopup = () => {
-    setIsPopup(false);
-  }
-
   return (
     <div className={styles.main}>
       <div className={styles.wrapper}>
@@ -35,7 +31,7 @@ export function Main() {
 
         >add card</button>
       </div>
-      <CardsContainer closePopup={closePopup} isPopup={isPopup} />
+      <CardsContainer isPopup={isPopup} setIsPopup={setIsPopup} />
     </div>
   )
 }
