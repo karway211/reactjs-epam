@@ -1,46 +1,64 @@
-import React, { Dispatch, SetStateAction, useState } from 'react';
-import { DataType } from '../CardsContainer'
+import React from 'react';
 import cn from 'classnames';
 
 import styles from './Popup.module.scss';
+import { DataCardsType, ErrorCardsType } from '../../../../types';
 
 type PropsType = {
+  stateInputs: DataCardsType,
   isPopup: boolean,
+  errors: ErrorCardsType,
+  inputsRef: React.MutableRefObject<{
+    [key: string]: HTMLInputElement | null;
+  }>,
   closePopup: () => void,
-  onSaveCard: (state: DataType, setState: Dispatch<SetStateAction<DataType>>) => void
+  onMouseDownHandler: () => void,
+  onBlurHandler: (event: {
+    target: {
+      value: any;
+      id: any;
+    };
+  }) => void,
+  onChangeInput: (event: {
+    target: {
+      value: string;
+      id: string;
+    };
+  }) => void,
+  onMouseUpHandler: () => void,
 }
 
 export function Popup({
+  stateInputs,
   isPopup,
+  errors,
+  inputsRef,
   closePopup,
-  onSaveCard,
+  onMouseDownHandler,
+  onBlurHandler,
+  onChangeInput,
+  onMouseUpHandler,
 }: PropsType) {
 
-  const [state, setState] = useState<DataType>({
-    title: '',
-    price: '',
-    imageUrl: '',
-    gender: '',
-  });
-
-  const onChangeInput = (event: { target: { value: string; id: string; }; }) => {
-    const id = event.target.id;
-    const value = event.target.value;
-    setState({ ...state, [id]: value });
-  }
-
-  const blockNames = Object.keys(state).map((el: string, i: number) => {
+  const blockNames = Object.keys(stateInputs).map((el: string) => {
+    const errorMessage = errors[el];
     return (
-      <label key={el}>
+      <label className={styles.blockNameElem} key={el}>
         {el}
         <br />
         <input
           type='text'
           id={el}
-          className={styles.blockNameItem}
+          className={cn(styles.blockNameItem, {
+            [styles.blockNameError]: errorMessage,
+          })}
           onChange={onChangeInput}
-          value={state[el]}
+          value={stateInputs[el]}
+          onBlur={onBlurHandler}
+          ref={(element) => inputsRef.current[el] = element}
         />
+        <br />
+        <span className={styles.errorMessage}>{errorMessage}</span>
       </label>
     )
   });
@@ -53,14 +71,15 @@ export function Popup({
       <div className={styles.card}>
         <i
           className={`fas fa-times-circle ${styles.close}`}
-          onClick={() => closePopup()}
+          onClick={closePopup}
         ></i>
         <div className={styles.blockName}>
           {blockNames}
         </div>
         <button
           className={styles.saveCard}
-          onClick={() => onSaveCard(state, setState)}
+          onMouseDown={onMouseDownHandler}
+          onMouseUp={onMouseUpHandler}
         >save</button>
       </div>
     </div >

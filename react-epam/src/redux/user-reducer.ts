@@ -1,6 +1,7 @@
 import { InferActionsTypes, AppDispatchType } from "./store";
 import { MockedResponseItemType, MockedResponseType } from "../api/mockedResponse";
 import { mockedApi } from "../api/mockedApi";
+import { ErrorCardsType } from "../types";
 
 const initialState = {
   user: {
@@ -15,7 +16,13 @@ const initialState = {
     phone: '375445477737',
     skype: 'live:37250c3478b9f1a1',
   },
-  warehouse: [] as MockedResponseType
+  warehouse: [] as MockedResponseType,
+  errors: {
+    title: '' as string | boolean,
+    price: '' as string | boolean,
+    imageUrl: '' as string | boolean,
+    gender: '' as string | boolean,
+  } as ErrorCardsType,
 }
 
 const userReducer = (state = initialState, action: ActionsType): InitialStateType => {
@@ -40,6 +47,22 @@ const userReducer = (state = initialState, action: ActionsType): InitialStateTyp
         warehouse: [...state.warehouse, action.payload]
       }
     }
+    case 'SET_ERRORS': {
+      return {
+        ...state,
+        errors: { ...state.errors, ...action.payload },
+      }
+    }
+    case 'CLEAR_ERRORS': {
+      const newErrors: { [key: string]: string | boolean } = { ...state.errors };
+      Object.keys(newErrors).forEach(key => {
+        newErrors[key] = ''
+      });
+      return {
+        ...state,
+        errors: { ...state.errors, ...newErrors },
+      }
+    }
     default: {
       return {
         ...initialState
@@ -52,6 +75,8 @@ export const actions = {
   setDataWarehouse: (payload: MockedResponseType) => ({ type: 'SET_DATA_WAREHOUSE', payload } as const),
   deleteWarehouseItem: (payload: number) => ({ type: 'DELETE_WAREHOUSE_ITEM', payload } as const),
   setWarehouseItem: (payload: MockedResponseItemType) => ({ type: 'SET_WAREHOUSE_ITEM', payload } as const),
+  setErrors: (payload: { [key: string]: string | boolean }) => ({ type: 'SET_ERRORS', payload } as const),
+  clearErrors: () => ({ type: 'CLEAR_ERRORS' } as const),
 }
 
 export const getDataWarehouse = () => async (dispatch: AppDispatchType): Promise<void> => {

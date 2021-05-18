@@ -2,7 +2,7 @@
 @import '../../../../constants/vars.scss';
 
 .wrapper {
-  position: absolute;
+  position: fixed;
   top: 0;
   left: 0;
   right: 0;
@@ -20,7 +20,7 @@
     justify-content: center;
     position: relative;
     width: 400px;
-    height: 300px;
+    height: 400px;
     background-color: $color_light_text;
     border-radius: 10px;
     .close {
@@ -40,9 +40,20 @@
     display: flex;
     flex-direction: column;
 
+    .blockNameElem {
+      min-height: 65px;
+    }
+
     .blockNameItem {
       cursor: pointer;
+    }
+    .blockNameError {
+      border: 1px solid $error_color;
+    }
+    .errorMessage {
+      color: $error_color;
       margin-bottom: 10px;
+      font-size: $small_font_size;
     }
   }
 
