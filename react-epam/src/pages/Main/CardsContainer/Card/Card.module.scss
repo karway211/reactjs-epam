@@ -1,13 +1,21 @@
 @import '../../../../constants/palette.scss';
 
 .card {
+  position: relative;
   background-color: $color_light_text;
   border: 2px solid $color_dark;
   margin: 10px;
-  cursor: pointer;
+  
 }
 
 .image {
   display: block;
   width: 300px;
+}
+
+.delete {
+  position: absolute;
+  top: 2px;
+  right: 2px;
+  cursor: pointer;
 }

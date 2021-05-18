@@ -1,54 +1,82 @@
-import React, { Component } from 'react';
-import { connect } from 'react-redux';
-import { MockedResponseType } from '../../../api/mockedResponse';
+import React, { Dispatch, SetStateAction, useEffect } from 'react';
+import { useDispatch, useSelector } from 'react-redux';
+import { ThunkAction } from 'redux-thunk';
 import { AppStateType } from '../../../redux/store';
-import { getDataWarehouse } from '../../../redux/user-reducer';
+import { actions, ActionsType, getDataWarehouse } from '../../../redux/user-reducer';
+import { Popup } from './Popup';
 import { Card } from './Card/Card';
 
 import styles from './CardsContainer.module.scss';
 
-type MapStateType = {
-  warehouse: MockedResponseType,
+type ThunkType = Dispatch<ActionsType> | ThunkAction<void, AppStateType, unknown, ActionsType>;
+
+export type DataType = {
+  [key: string]: string,
+  price: string,
+  title: string,
+  imageUrl: string,
+  gender: string,
 }
 
-type MapDispatchType = {
-  getDataWarehouse: () => void,
+type PropsType = {
+  isPopup: boolean,
+  closePopup: () => void
 }
 
-class CardsContainer extends Component<MapStateType & MapDispatchType> {
-  state = {
-    data: [] as MockedResponseType,
+export function CardsContainer({
+  closePopup,
+  isPopup,
+}: PropsType) {
+
+  const warehouse = useSelector((state: AppStateType) => state.userData.warehouse);
+
+  const dispatch: any = useDispatch();
+
+  useEffect(() => {
+    dispatch(getDataWarehouse());
+  }, [dispatch]);
+
+
+  const onDeleteItem = (id: number) => {
+    const { deleteWarehouseItem } = actions;
+    dispatch(deleteWarehouseItem(id));
   }
 
-  componentDidMount() {
-    const { getDataWarehouse } = this.props;
-    getDataWarehouse();
-  }
+  const onSaveCard = (
+    state: DataType,
+    setState: Dispatch<SetStateAction<DataType>>
+  ) => {
+    const { setWarehouseItem } = actions;
 
-  componentDidUpdate(prevProps: MapStateType) {
-    const { warehouse } = this.props
-    if (JSON.stringify(warehouse) !== JSON.stringify(prevProps.warehouse)) {
-      this.setState({ data: warehouse });
+    const isFullField = Object.values(state).some((el: string) => !el);
+
+    if (!isFullField) {
+      dispatch(setWarehouseItem({ id: new Date().getTime(), ...state }));
     }
+
+    setState({
+      ...state,
+      title: '',
+      price: '',
+      imageUrl: '',
+      gender: '',
+    });
+
+    closePopup();
   }
 
-  render() {
-    const { data } = this.state;
+  const cards = warehouse.map(card => <Card key={card.id} onDeleteItem={onDeleteItem} {...card} />);
+  const noCards = <div className={styles.stub}>No cards yet</div>
 
-    const cards = data.map(card => <Card key={card.id} {...card} />);
-    const noCards = <div className={styles.stub}>No cards yet</div>
+  return (
 
-    return (
-
-      <div className={styles.CardsContainer}>
-        {data.length ? cards : noCards}
-      </div>
-    )
-  }
+    <div className={styles.CardsContainer}>
+      {warehouse.length ? cards : noCards}
+      <Popup
+        isPopup={isPopup}
+        closePopup={closePopup}
+        onSaveCard={onSaveCard}
+      />
+    </div>
+  )
 }
-
-const mapStateToProps = (state: AppStateType) => ({
-  warehouse: state.userData.warehouse,
-});
-
-export default connect(mapStateToProps, { getDataWarehouse })(CardsContainer);
