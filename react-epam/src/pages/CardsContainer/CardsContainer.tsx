@@ -1,25 +1,22 @@
-import React, { Dispatch, SetStateAction, useEffect, useRef, useState } from 'react';
+import React, { Dispatch, useRef, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { ThunkAction } from 'redux-thunk';
-import { AppStateType } from '../../../redux/store';
-import { actions, ActionsType, getDataWarehouse } from '../../../redux/user-reducer';
+
 import { Popup } from './Popup';
 import { Card } from './Card/Card';
 
-import { DataCardsType } from '../../../types';
+import { DataCardsType } from '../../types';
+
+import { actions, ActionsType } from '../../redux/cards-reducer';
+import { AppStateType } from '../../redux/store';
 
 import styles from './CardsContainer.module.scss';
 import { getErrorMessage } from './helper';
 
 type ThunkType = Dispatch<ActionsType> | ThunkAction<void, AppStateType, unknown, ActionsType>;
 
-type PropsType = {
-  isPopup: boolean,
-  setIsPopup: Dispatch<SetStateAction<boolean>>,
-}
-
-export function CardsContainer({ isPopup, setIsPopup }: PropsType) {
-
+export function CardsContainer() {
+  const [isPopup, setIsPopup] = useState(false);
   const [state, setState] = useState<DataCardsType>({
     title: '',
     price: '',
@@ -29,8 +26,8 @@ export function CardsContainer({ isPopup, setIsPopup }: PropsType) {
 
   const inputsRef = useRef<{ [key: string]: HTMLInputElement | null }>({});
 
-  const warehouse = useSelector((state: AppStateType) => state.userData.warehouse);
-  const errors = useSelector((state: AppStateType) => state.userData.errors);
+  const warehouse = useSelector((state: AppStateType) => state.cards.warehouse);
+  const errors = useSelector((state: AppStateType) => state.cards.errors);
 
   const dispatch: any = useDispatch();
 
@@ -40,10 +37,6 @@ export function CardsContainer({ isPopup, setIsPopup }: PropsType) {
     setWarehouseItem,
     setErrors
   } = actions;
-
-  useEffect(() => {
-    dispatch(getDataWarehouse());
-  }, [dispatch]);
 
   const closePopup = () => {
     setState({
@@ -103,6 +96,10 @@ export function CardsContainer({ isPopup, setIsPopup }: PropsType) {
     dispatch(setErrors({ [id]: errorMessage }));
   }
 
+  const createCard = (isPopup: boolean) => {
+    setIsPopup(isPopup);
+  }
+
   const cards = warehouse.map(card => <Card key={card.id} onDeleteItem={onDeleteItem} {...card} />);
   const noCards = <div className={styles.stub}>No cards yet</div>
 
@@ -121,6 +118,11 @@ export function CardsContainer({ isPopup, setIsPopup }: PropsType) {
         onChangeInput={onChangeInput}
         stateInputs={state}
       />
+      <button
+        className={styles.addCard}
+        onClick={() => createCard(true)}
+
+      >add card</button>
     </div>
   )
 }

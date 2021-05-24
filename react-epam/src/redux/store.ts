@@ -2,9 +2,13 @@ import { combineReducers, createStore, applyMiddleware } from "redux";
 import thunkMiddleWare from "redux-thunk";
 import { composeWithDevTools } from 'redux-devtools-extension';
 import userReducer from "./user-reducer";
+import authReducer from "./auth-reducer";
+import cardsReducer from "./cards-reducer";
 
 let reducers = combineReducers({
   userData: userReducer,
+  auth: authReducer,
+  cards: cardsReducer,
 })
 const store = createStore(reducers, composeWithDevTools(applyMiddleware(thunkMiddleWare)));
 

@@ -1,9 +1,12 @@
 @import '../../constants/palette.scss';
 @import '../../constants/vars.scss';
 
-.main {
+.wrapper {
   display: flex;
-  
+  align-items: center;
+  justify-content: center;
+  flex-direction: column;
+  min-height: 100%;
   & .card {
     min-width: 300px;
     width: 300px;
@@ -47,17 +50,19 @@
   }
 }
 
-.addCard {
-  cursor: pointer;
-  padding: 5px 10px;
+.aboutMeItem, .skillsItem {
+  font-size: $large_font_size;
   color: $color_light_text;
-  background-color: $color_brand_dark;
-  outline: none;
+  text-shadow: 1px 1px 2px $color_brand_dark, 0 0 1em $error_color;
 }
 
-@media (max-width: $tablet_breakpoint) {
-  .main {
-    flex-wrap: wrap;
-    justify-content: center;
-  }
+.skillsItem {
+  margin: 10px;
+}
+
+.skills {
+  width: 300px;
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-around;
 }

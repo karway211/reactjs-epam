@@ -2,7 +2,7 @@ import React from 'react';
 import cn from 'classnames';
 
 import styles from './Popup.module.scss';
-import { DataCardsType, ErrorCardsType } from '../../../../types';
+import { DataCardsType, ErrorCardsType } from '../../../types';
 
 type PropsType = {
   stateInputs: DataCardsType,
