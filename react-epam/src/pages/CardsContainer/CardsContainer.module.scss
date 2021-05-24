@@ -1,0 +1,31 @@
+@import '../../constants/palette.scss';
+
+.CardsContainer {
+  display: flex;
+  width: 100%;
+  flex-wrap: wrap;
+  justify-content: center;
+  align-items: center;
+  padding-top: 50px;
+  & .stub {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    font-size: 24px;
+    color: $color_light_text;
+  }
+  .addCard {
+    position: absolute;
+    cursor: pointer;
+    padding: 5px 10px;
+    color: $color_light_text;
+    background-color: $color_brand_dark;
+    outline: none;
+    position: absolute;
+    top: 70px;
+    left: 50%;
+    transform: translateX(-50%);
+    z-index: 2;
+  }
+}

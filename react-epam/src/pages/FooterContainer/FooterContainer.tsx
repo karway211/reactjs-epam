@@ -9,6 +9,7 @@ import { AppStateType } from '../../redux/store';
 export const FooterContainer = () => {
 
   const { phone, skype } = useSelector((state: AppStateType) => state.userData.contact);
+  const isAuth = useSelector((state: AppStateType) => state.auth.isAuth);
 
   const phoneMask = getPhoneMask(phone);
 
@@ -16,6 +17,7 @@ export const FooterContainer = () => {
     <Footer
       phone={phone}
       skype={skype}
+      isAuth={isAuth}
       phoneMask={phoneMask} />
   )
 }
